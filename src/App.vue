@@ -1,27 +1,23 @@
 <template>
-  <div class="black-bg" v-if="isShowModal">
-    <div class="white-bg">
-      <h4>상세페이지임</h4>
-      <p>상세페이지 내용임</p>
-      <button @click="isShowModal = false">닫기</button>
-    </div>
-  </div>
-  <div v-for="item, index in products" :key="index">
-    <img class="room-img" :src="item.image"/>
-    <h4 @click="isShowModal = true">{{ item.title }}</h4>
-    <p>{{ item.price }}만원</p>
-    <button @click="()=>increase(item)">허위매물 신고</button><span>신고수 : {{item.count}}</span>
-  </div>
+  
+  <Modal @closeModal="isShowModal = false;" :products="products" :selectedIndex="selectedIndex" :isShowModal="isShowModal"/>
+  <Card @openModal="isShowModal = true; selectedIndex = index" :item="item" v-for="item, index in products" :key="index"/>
+  <Discount />
+
 </template>
 
 <script>
 
 import products from './oneroom';
+import Discount from './components/Discount.vue';
+import Modal from './components/Modal.vue';
+import Card from './components/Card.vue';
 
 export default {
   name: 'App',
   data(){
     return {
+      selectedIndex : undefined,
       modalData : {
         modalTitle : '',
         modalDesc : '',
@@ -35,7 +31,11 @@ export default {
       item.count++;
     },
   },
-  components:{}
+  components:{
+    Discount,
+    Modal,
+    Card
+  }
 }
 </script>
 
@@ -56,19 +56,11 @@ export default {
 
 body{
   margin: 0;
+  text-align: center;
 }
 div{
   box-sizing: border-box;
 }
 
-.black-bg{
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  position: fixed; padding: 20px;
-}
-.white-bg{
-  width: 100%; background: white;
-  border-radius: 8px;
-  padding: 20px;
-}
+
 </style>
