@@ -5,6 +5,18 @@
         <img style="width: 100%;" :src="products[selectedIndex].image"/>
         <h4>{{  products[selectedIndex].title }}</h4>
         <p>{{ products[selectedIndex].content }}</p>
+        <select v-model="checkedValue">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select><br/><br/>
+        <textarea v-model="text"></textarea><br/>
+        <!-- @input="month = $event.target.value"와 v-model 같음 -->
+        <input v-model.number="month"/>
+        <p>체크된 value : {{ checkedValue }}</p>
+        <p>메모 : {{ text }}</p>
+        <p>{{ month }}개월 선택함 (기본값 1개월) : {{ products[selectedIndex].price * month }}원</p>
         <button @click="$emit('closeModal')">닫기</button>
         <Discount/>
       </div>
@@ -20,6 +32,13 @@
 <script>
 export default {
     name: 'ModalDiv',
+    data(){
+      return {
+        month : 1,
+        text : '',
+        checkedValue : ''
+      }
+    },
     //props는 수정이 안됨. readOnly
     props: {
         products : Array,

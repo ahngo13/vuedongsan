@@ -1,7 +1,12 @@
 <template>
-  
+  <!-- 
+    props 보낼 때
+    작명="문자자료"
+    :작명="숫자자료"
+  -->
   <Modal @closeModal="isShowModal = false;" :products="products" :selectedIndex="selectedIndex" :isShowModal="isShowModal"/>
-  <Card @openModal="isShowModal = true; selectedIndex = index" :item="item" v-for="item, index in products" :key="index"/>
+  <!-- $event emit으로 전달한 파라미터 받아올 수 있음 -->
+  <Card @openModal="isShowModal = true; selectedIndex = $event.id" :item="item" v-for="item, index in products" :key="index"/>
   <Discount />
 
 </template>
